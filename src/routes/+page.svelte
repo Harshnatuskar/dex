@@ -21,7 +21,9 @@
     
     $: monsterId2 =$page.url.searchParams.get("monsterId2") || '';
 
-    $: monster2 = data.monsters.find((monster)=> monster.id === monsterId2);
+    $: monster2 = data.monsters.find((monster)=> monster.id === monsterId2); 
+
+    $: selectedGenerationId = $page.url.searchParams.get('generation_id')|| ";"
     
     const updateSearchParams = (key: string, value: string) => {
         const searchParams = new URLSearchParams($page.url.searchParams);
@@ -51,21 +53,18 @@
       
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div class="generations">
-      <a
-        class="generation"
-        class:active={$page.url.searchParams.get('generation') === null}
-        href="/"
-      >
+      <button class="generation"
+        class:active={selectedGenerationId == 'all'}
+        on:click={()=> updateSearchParams('generation_id','all')}>
         All
-      </a>
-      {#each generations as generation (generation.id)}
-        <a
-          class="generation"
-          class:active={$page.url.searchParams.get('generation') === generation.id.toString()}
-          href="/?generation={generation.id}"
-        >
+      </button> 
+      
+      {#each generations as generation (generation.id)} 
+        <button class="generation"
+          class:active={selectedGenerationId === generation.id.toString()}   
+          on:click={()=> updateSearchParams('generation_id',generation.id.toString())}>
           {generation.main_region}
-        </a>
+        </button>
       {/each}
     </div>
     
@@ -108,6 +107,7 @@
         color: #333; 
         border-radius: 3px;
         text-decoration: none;
+        cursor: pointer;
       }
       .generation.active {
         background-color: #333;
