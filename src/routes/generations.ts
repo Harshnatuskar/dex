@@ -6,6 +6,8 @@ export type Generation = {
     pokemon_species?: string[],
   }
   
+   
+
   export const generations: Generation[] = [
     {
       id: 1,

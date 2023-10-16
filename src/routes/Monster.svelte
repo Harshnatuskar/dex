@@ -29,14 +29,18 @@
     </div>
 
     <style>
+      :global(body) {
+        background-color: black; 
+    }
          
-      .monster-id {
-        position: absolute;
-        top: 8px;
-        left: 8px;
-        font-size: 0.8em;
-        color: #aaa;
-      }
+    .monster-id {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      font-size: 0.8em;
+      color: #3d3d3d;
+      border-radius: 8px;
+    }
     .monster {
       text-decoration: none;
       width: 100px;
@@ -44,13 +48,16 @@
       padding: 10px;
       position: relative;
       background-color: #eee;
+      border-radius: 8px;
+      border: 1px solid rgb(68, 68, 68);
     }
     .monster:hover {
-      background-color: #ddd;
+      background-color: #ffffff;
     }
     .monster-content {
       display: flex;
       flex-direction: column;
       align-items: center;
-    }
+    }  
+
     </style>

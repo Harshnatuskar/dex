@@ -6,6 +6,14 @@
     import Monster from "./Monster.svelte";
     
     export let data: PageData;
+
+    let form = {
+      searchString:''
+    }
+    let searchString = ''
+    $: selectedMonsters= data.monsters.filter((monster)=>{
+      return monster.name.toLowerCase().includes(searchString.toLowerCase());
+    })
      
     $: monsterId =$page.url.searchParams.get("monsterId") || '';
 
@@ -19,6 +27,10 @@
         const searchParams = new URLSearchParams($page.url.searchParams);
         searchParams.set(key, value);
         goto(`?${searchParams.toString()}`);
+    }
+
+    const submitSearch = (e: Event) =>{
+      searchString= form.searchString;
     }
      
     </script>
@@ -59,8 +71,13 @@
     
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <form class="search-form" on:submit={submitSearch}>
+      <input class="search-field" type="text" bind:value={form.searchString} placeholder="pokemon name">
+      <input type="submit" value="Search">
+    </form>
+     
     <div class="monsters" >
-      {#each data.monsters as monster (monster.id)}
+      {#each selectedMonsters as monster (monster.id)}
          <Monster 
          monster={monster}
          updateSearchParams={updateSearchParams}
@@ -89,6 +106,8 @@
         border: 1px solid black;
         background-color: #f9f9f9;
         color: #333; 
+        border-radius: 3px;
+        text-decoration: none;
       }
       .generation.active {
         background-color: #333;
@@ -101,5 +120,26 @@
         background-color: #555;
       }
        
-    
+      .search-form{
+        display: flex;
+        justify-content: center;
+        margin: 20px 0; 
+      } 
+
+      .search-form input[type="text"]{
+        padding: 5px 10px;
+        border: 1px solid #333;
+        border-radius: 5px;
+        width: 200px;
+      }
+
+      .search-form input[type="submit"]{
+        padding: 5px 10px;
+        border: 1px solid #333;
+        border-radius: 5px;
+        margin-left: 10px;
+        background-color: #333;
+        color: #fff;
+      }
+      
     </style>
