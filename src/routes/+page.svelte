@@ -18,10 +18,7 @@
     $: monsterId =$page.url.searchParams.get("monsterId") || '';
 
     $: monster = data.monsters.find((monster)=> monster.id === monsterId);
-    
-    $: monsterId2 =$page.url.searchParams.get("monsterId2") || '';
-
-    $: monster2 = data.monsters.find((monster)=> monster.id === monsterId2); 
+     
 
     $: selectedGenerationId = $page.url.searchParams.get('generation_id')|| ";"
     
@@ -43,13 +40,7 @@
             updateSearchParams={updateSearchParams}
         />
     {/if}
-
-    {#if monster2}
-        <Monster
-            monster={monster2} 
-            updateSearchParams={updateSearchParams}
-        />
-    {/if}
+ 
       
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div class="generations">
@@ -58,7 +49,7 @@
         on:click={()=> updateSearchParams('generation_id','all')}>
         All
       </button> 
-      
+
       {#each generations as generation (generation.id)} 
         <button class="generation"
           class:active={selectedGenerationId === generation.id.toString()}   
@@ -70,7 +61,7 @@
     
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <form class="search-form" on:submit={submitSearch}>
+    <form class="search-form" on:submit|preventDefault={submitSearch}>
       <input class="search-field" type="text" bind:value={form.searchString} placeholder="pokemon name">
       <input type="submit" value="Search">
     </form>
