@@ -12,6 +12,7 @@ export type IndexMonster = ApiMonster & {
 };
 
 export const load: PageLoad = async ({ fetch, url }) => {
+  try {
   const generationId = url.searchParams.get('generation_id') || '1';
   let monstersList = [];
 
@@ -48,7 +49,11 @@ export const load: PageLoad = async ({ fetch, url }) => {
   return {
     monsters,
   };
-};
+} catch (error) {
+  console.error('Error in load function:', error);
+  throw error;
+}
+}; 
 
 // Implement your logic to determine rarity based on the fetched details
 function determineRarity(detailsJson: any): 'normal' | 'rare' | 'ultra' {

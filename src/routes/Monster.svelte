@@ -26,7 +26,7 @@
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div on:click={()=> isInteractive?updateSearchParams('monsterId',monster.id):()=>{}}>
       <div class="monster-content">
-        <img src={monster.image} alt={monster.name} />
+        <img src={monster.image} alt={`Image of ${monster.name}`} />
         {monster.name}
       </div>
       <div class="monster-id">
